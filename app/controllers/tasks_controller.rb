@@ -1,0 +1,48 @@
+class TasksController < ApplicationController
+
+  def index
+    respond_to do |format|
+      tasks = Task.master_tasks current_user.id
+      format.json {render :json => tasks}
+    end
+  end
+  
+  def create
+    Task.transaction do
+      task = Task.new(params[:task])
+      puts task.inspect
+      task.user_id = current_user.id
+      task.master_task_id = params[:master_task_id] if !params[:master_task_id].nil?
+      task.status = "event created"
+      task.finished = false
+      task.save!
+    end
+    
+    head :ok
+  end
+
+  def update
+    Task.transaction do
+      task = Task.where(:id => params[:task_id]).first
+      task.update_attributes(params[:task])
+    end
+    head :ok
+  end
+  
+  def destroy
+    Task.transaction do
+      task = Task.where(:id => params[:task_id]).first
+      task.destroy
+    end
+    head :ok
+  end
+
+  def sub_tasks
+    task = Task.where(:id => params[:task_id]).first
+    sub_tasks = task.sub_task
+    respond_to do |format|
+      format.json {render :json => sub_tasks}
+    end
+  end
+
+end

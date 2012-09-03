@@ -1,0 +1,29 @@
+class Task < ActiveRecord::Base
+  attr_accessible :name, :description, :user_id, :start_date, :end_date, :master_task_id, :status, :finished
+  
+  belongs_to :master_task,   :class_name => "Task", :foreign_key => "master_task_id", :counter_cache => true
+  has_many   :sub_task,    :class_name => "Task", :foreign_key => "master_task_id", :dependent => :destroy
+  belongs_to :user
+  scope :master_tasks, lambda{|user| { :conditions => { :user_id => user, :master_task_id => nil } } }
+  
+  validates :name, :presence => true
+  validates :description, :presence => true
+  validates :user_id, :presence => true
+  validates :start_date, :presence => true
+  validates :end_date, :presence => true
+  
+  before_validation :validates_date
+  
+  def validates_date
+    errors.add(:start_date, 'is not valid') if Time.now > self[:start_date]
+    errors.add(:end_date, 'is not valid') if self[:start_date] > self[:end_date]
+  end
+
+  def validates_master_date
+    if !self[:master_task_id].nil?
+      master_task = Task.where(:id => self[:master_task_id]).first
+      errors.add(:start_date, 'is not valid') if self[:start_date] >= master_task.start_date
+      errors.add(:end_date, 'is not valid') if self[:end_date] < master_task.end_date
+    end
+  end
+end

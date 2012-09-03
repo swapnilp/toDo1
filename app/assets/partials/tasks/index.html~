@@ -1,0 +1,45 @@
+<div ng-show="true">
+  Filter :<input type="text" ng-model="filter_task"/><button ng-click="filter_task=''">Clear</button>
+  <br />
+  <!-- <button ng-click="show_tasks=!show_tasks">change</button>-->
+  <ul ng-repeat="task in tasks | filter:filter_task">
+    <li>Name - <a ng-click="taskShow(task)">{{task.name}}</a> Description  - {{task.description}} Sub tasks - {{task.tasks_count}}</li>
+  </ul>
+  <b-blink></b-blink>
+</div>
+
+<div ng-show="show_tasks">
+  Name         :{{task.name}}<br />
+  Description  :{{task.description}}<br />
+  Start Date   :{{task.start_date}}<br />
+  End Date     :{{task.end_date}}<br />
+  Status       :{{task.status}}<br />
+  <button ng-click="taskEdit(task)"> Edit</button>
+  <br />
+  
+  <!-- show sub task -->
+  <div ng-show="show_subtask">
+    SubTasks <br />
+    <ul ng-repeat="subtask in subtasks | filter:filter_task">
+      <li>
+	Name - <a ng-click="">{{subtask.name}}</a>  
+	Description  - {{subtask.description}}
+	Start date - {{subtask.start_date}}
+	End date - {{subtask.end_date}}
+	<a>remove</a>
+      </li>
+    </ul>
+    <br />
+    <button ng-click="show_subtask = !show_subtask">Add Sub Task</button>
+  </div>
+
+  <!-- edit sub task -->
+  <div ng-show="!show_subtask">
+    <new-subtask></new-subtask>
+    <button ng-click="show_subtask = !show_subtask">Show Sub Tasks</button>
+  </div>
+</div>
+
+<div ng-show="edit_tasks">
+  <edittask-form><edittask-form>
+</div>

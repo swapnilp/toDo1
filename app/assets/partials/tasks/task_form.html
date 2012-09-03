@@ -1,0 +1,9 @@
+<div>
+  <form ng-submit="submitFrom()" csrf-tokenized>
+    Task Name<input type="text" placeholder="Name" ng-model="newtask.name" required />
+    Task Description<input type="text" placeholder="Description" ng-model="newtask.description" required />
+    Start Date <input type="text" placeholder="Start date" ng-model="newtask.start_date" required />
+    Start Date <input type="text" placeholder="End date" ng-model="newtask.end_date" required />
+    <input type="submit" value="submit" />
+  </form>
+</div>

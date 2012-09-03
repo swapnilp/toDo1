@@ -1,0 +1,95 @@
+var module = angular.module("Task.directives", []);
+ 
+
+module.directive("showTasks", function() {
+  return {
+    restrict: "E",
+    templateUrl: "<%=asset_path 'tasks/index.html' %>",
+    controller: tasksCtrl,
+    replace: false,
+    link: function(scope, elt, attrs, controller) {
+    	  scope.fetchTasks();
+	  
+	  scope.taskShow = function(task) {
+	    scope.task =  task;
+	    scope.show_tasks = true;
+	    scope.edit_tasks = false;
+	    scope.fetchsubTasks();
+	    scope.show_subtask = true;
+	  };
+	  
+	  scope.taskEdit = function(task) {
+	    scope.task =  task;
+	    scope.show_tasks = false;
+	    scope.edit_tasks = true;
+	  };
+	  
+        }
+  }
+});
+
+module.directive("completedTask", function() {
+  return {
+    restrict: "E",
+    templateUrl: "<%=asset_path 'tasks/index.html' %>",
+    controller: tasksCtrl,
+    replace: false
+  }
+});
+
+module.directive("newtaskForm", function() {
+  return {
+    restrict: "E",
+    templateUrl: "<%=asset_path 'tasks/task_form.html' %>",
+    controller: newTaskCtrl,
+    replace: false
+  }
+});
+
+module.directive("newSubtask", function() {
+  return {
+    restrict: "E",
+    templateUrl: "<%=asset_path 'tasks/task_form.html' %>",
+    controller: newsubTaskCtrl,
+    replace: false
+  }
+});
+
+module.directive("edittaskForm", function() {
+  return {
+    restrict: "E",
+    templateUrl: "<%=asset_path 'tasks/task_form.html' %>",
+    controller: tasksCtrl,
+    replace: false,
+    link: function(scope, elt, attrs, controller) {
+
+    	  scope.taskEdit = function(task) {
+	    scope.task =  task;
+	    scope.show_tasks = false;
+	    scope.edit_tasks = true;
+	  };
+        }
+  }
+});
+
+module.directive('blink', function($timeout) {
+  return {
+    restrict: 'E',
+    transclude: true,
+    scope: {},
+    controller: function($scope, $element) {
+      function showElement() {
+        $element.css("display", "inline");
+        $timeout(hideElement, 1000);
+      }
+
+    function hideElement() {
+        $element.css("display", "none");
+	$timeout(showElement, 1000);
+	}
+	showElement();
+	},
+	template: '<span ng-transclude></span>',
+	replace: true
+     };
+});

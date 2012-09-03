@@ -1,0 +1,10 @@
+<div ng-app="Home" ng-controller="homeCtrl">
+  <input type="text" ng-model="temp"/>
+  {{temp}}
+
+  <a href="#my_tasks">My Tasks</a>
+  <a href="#new_task">New Task</a>
+  <a href="#finished_task">Completed Task</a>
+  <%= link_to "Sign Out", destroy_user_session_path, :method => :delete%>
+  <ng-view></ng-view>
+</div>

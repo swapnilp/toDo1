@@ -1,0 +1,30 @@
+var module = angular.module("Subtask.directives", []);
+
+module.directive("showTasks", function() {
+  return {
+    restrict: "E",
+    templateUrl: "<%=asset_path 'tasks/index.html' %>",
+    controller: tasksCtrl,
+    replace: false,
+    link: function(scope, elt, attrs, controller) {
+    	  scope.fetchTasks();
+	  scope.taskShow = function(task) {
+	    scope.task =  task;
+	    scope.show_tasks = true;
+	  };
+	  
+	  scope.taskShow = function(task) {
+	    scope.task =  task;
+	    scope.show_tasks = true;
+	    scope.edit_tasks = false;
+	  };
+	  
+	  scope.taskEdit = function(task) {
+	    scope.task =  task;
+	    scope.show_tasks = false;
+	    scope.edit_tasks = true;
+	  };
+	  
+        }
+  }
+});

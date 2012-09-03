@@ -1,0 +1,14 @@
+var module = angular.module("Home", ["Task", "global"]);
+
+module.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when("/my_tasks", {template: "<div><show-tasks></show-tasks></div>"});
+  $routeProvider.when("/my_completed_task", {template: "<div><completed-task></completed-task></div>"});
+  $routeProvider.when("/new_task", {templateUrl: "<%= asset_path 'tasks/new.html' %>"});
+  $routeProvider.when("/show_task", {template: "profile_completion"});
+  $routeProvider.otherwise({redirectTo: "/my_tasks"});
+}]);
+
+module.run(function() {
+
+});
+
