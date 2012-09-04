@@ -17,6 +17,7 @@ module.directive("showTasks", function() {
 	    scope.fetchsubTasks();
 	    scope.show_subtask = true;
 	    scope.newtask = {};
+	    scope.mytasks = false;
 	  };
 	  
 	  scope.taskEdit = function(task) {
@@ -42,7 +43,10 @@ module.directive("newtaskForm", function() {
     restrict: "E",
     templateUrl: "<%=asset_path 'tasks/task_form.html' %>",
     controller: newTaskCtrl,
-    replace: false
+    replace: false,
+    link: function(scope, elt, attrs, controller) {
+    }
+
   }
 });
 
@@ -65,12 +69,17 @@ module.directive("edittaskForm", function() {
     controller: tasksCtrl,
     replace: false,
     link: function(scope, elt, attrs, controller) {
-
+    	  scope.form = elt.find("form");
+	  
     	  scope.taskEdit = function(task) {
 	    scope.task =  task;
 	    scope.show_tasks = false;
 	    scope.edit_tasks = true;
 	    scope.newtask = task;
+	  };
+	  
+	  scope.submitForm = function() {
+	  alert("asdas");
 	  };
         }
   }

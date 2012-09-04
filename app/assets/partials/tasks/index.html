@@ -1,14 +1,29 @@
-<div ng-show="true">
-  Filter :<input type="text" ng-model="filter_task"/><button ng-click="filter_task=''">Clear</button>
+<div style="margin-top:30px">
+  <div class="span10" style="padding-top:20px">
+    <lable>Filter <lable>
+	<input type="text" ng-model="filter_task"/>
+	<button class="btn" ng-click="filter_task=''">Clear</button>
+  </div>
+</div>
+<div ng-show="mytasks" class="well">
   <br />
   <!-- <button ng-click="show_tasks=!show_tasks">change</button>-->
-  <ul ng-repeat="task in tasks | filter:filter_task">
-    <li>Name - <a ng-click="taskShow(task)">{{task.name}}</a> Description  - {{task.description}} Sub tasks - {{task.tasks_count}}</li>
+  <ul class="nav nav-piles" ng-repeat="task in tasks | filter:filter_task">
+    <li ng-class="nav-header">
+      <span>
+	<span class="span2">Name - <a ng-click="taskShow(task)">{{task.name}}</a> </span>
+	<span class="span2"><span class="label">Description</span>  - {{task.description}} </span>
+	<span class="span2"><span class="label">Start Date</span>  - {{task.start_date}} </span>
+	<span class="span2"><span class="label">End Date</span>  - {{task.end_date}} </span>
+	<span class="span1"><a ng-click="removeTask(task.id, 'task')">Remove</a></span>
+	<span class="badge badge-info">{{task.tasks_count}}</span>
+      </span>
+    </li>
   </ul>
   <b-blink></b-blink>
 </div>
 
-<div ng-show="show_tasks">
+<div ng-show="!mytasks" class="well">
   Name         :{{task.name}}<br />
   Description  :{{task.description}}<br />
   Start Date   :{{task.start_date}}<br />
@@ -20,23 +35,28 @@
   <!-- show sub task -->
   <div ng-show="show_subtask">
     SubTasks <br />
-    <ul ng-repeat="subtask in subtasks | filter:filter_task">
-      <li>
-	Name - <a ng-click="">{{subtask.name}}</a>  
-	Description  - {{subtask.description}}
-	Start date - {{subtask.start_date}}
-	End date - {{subtask.end_date}}
-	<a>remove</a>
+    <ul class="nav nav-list" ng-repeat="subtask in subtasks | filter:filter_task">
+      <li class="nav-header">
+	<span class="">
+	  <span class="span2">Name - <a ng-click="taskShow(task)">{{subtask.name}}</a> </span>
+	  <span class="span2"><span class="label">Description</span>  - {{subtask.description}} </span>
+	  <span class="span2"><span class="label">Start Date</span>  - {{subtask.start_date}} </span>
+	  <span class="span2"><span class="label">End Date</span>  - {{subtask.end_date}} </span>
+	  <span class="span1"><a ng-click="removeTask(subtask.id, 'subtask')">Remove</a></span>
+	</span>
+	
       </li>
     </ul>
     <br />
     <button ng-click="show_subtask = !show_subtask;newtask={}">Add Sub Task</button>
+    <button ng-click="myTaskshome()">All Tasks</button>
   </div>
-
+  
   <!-- edit sub task -->
   <div ng-show="!show_subtask">
     <new-subtask></new-subtask>
     <button ng-click="show_subtask = !show_subtask">Show Sub Tasks</button>
+    <button ng-click="myTaskshome()">All Tasks</button>
   </div>
 </div>
 

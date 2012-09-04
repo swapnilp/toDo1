@@ -31,7 +31,7 @@ class TasksController < ApplicationController
   
   def destroy
     Task.transaction do
-      task = Task.where(:id => params[:task_id]).first
+      task = Task.where(:id => params[:id]).first
       task.destroy
     end
     head :ok

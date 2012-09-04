@@ -1,10 +1,11 @@
 <div ng-app="Home" ng-controller="homeCtrl">
-  <input type="text" ng-model="temp"/>
-  {{temp}}
-
-  <a href="#my_tasks">My Tasks</a>
-  <a href="#new_task">New Task</a>
-  <a href="#finished_task">Completed Task</a>
-  <%= link_to "Sign Out", destroy_user_session_path, :method => :delete%>
-  <ng-view></ng-view>
+  <div class="span10">
+    <a class="btn btn-primary" href="#my_tasks">My Tasks</a>
+    <a class="btn btn-primary" href="#new_task">New Task</a>
+    <a class="btn btn-primary" href="#finished_task">Completed Task</a>
+    <div class="pull-right offset3"><%= link_to "Sign Out", destroy_user_session_path, :method => :delete%></div>
+    <div class="row">
+      <ng-view></ng-view>
+    </div>
+  </div>
 </div>

@@ -1,16 +1,17 @@
-function newTaskCtrl($scope, $http) {
+function newTaskCtrl($scope, $http, $location) {
 
     $scope.submitFrom = function() {
 	$http.post('tasks', $scope.newtask).
-        success(function( ) {
-		alert("hi");
+        success(function() {
+		$scope.myTaskshome();
+		//alert("Success");
             }).
 	error( function( data ){
 		alert("Error");
             });
     };
 }
-newTaskCtrl.$inject = ["$scope", "$http"];
+newTaskCtrl.$inject = ["$scope", "$http", "$location"];
 
 function newsubTaskCtrl($scope, $http) {
 
@@ -28,17 +29,32 @@ function newsubTaskCtrl($scope, $http) {
 newTaskCtrl.$inject = ["$scope", "$http"];
 
 
-function tasksCtrl($scope, $http) {
+function tasksCtrl($scope, $http, $location) {
     $scope.tasks = [];
     $scope.subtasks = [];
     $scope.show_tasks = false;
     $scope.edit_tasks = false;
     $scope.show_subtask = true;
+    $scope.mytasks = true;
+    $scope.todayDate = new Date();
     
     $scope.fetchTasks = function() {
 	$http.get('tasks').
         success(function( taskss ) {
                 $scope.tasks = taskss;
+		console.log( typeOf($scope.tasks.end_date));
+            });
+    };
+
+    $scope.removeTask = function(task_id, type) {
+	$http.delete('tasks/'+task_id).
+        success(function() {
+		//$scope.fetchsubTasks();
+		if (type == 'task') {
+		    $scope.fetchTasks();
+		} else {
+		    $scope.fetchsubTasks();
+		}
             });
     };
     
@@ -49,8 +65,13 @@ function tasksCtrl($scope, $http) {
             });
     };
     
+    $scope.myTaskshome = function() {
+    	$location.path("my_tasks");
+    	$scope.mytasks = true;
+    };
+
     //    $scope.submitFrom = function() {
     //	alert("Edit From Submit");
     //};
 }
-tasksCtrl.$inject = ["$scope", "$http"];
+tasksCtrl.$inject = ["$scope", "$http", "$location"];
