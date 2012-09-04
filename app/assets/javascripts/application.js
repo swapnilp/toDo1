@@ -2,7 +2,11 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-modal
-//= require kalendae.min
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.es
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.fr
+
 //= require chosen.jquery
 //= require angularjs/angular
 //= require angularjs/angular-resource

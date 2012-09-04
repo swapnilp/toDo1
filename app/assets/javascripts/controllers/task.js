@@ -1,5 +1,7 @@
 function newTaskCtrl($scope, $http, $location) {
 
+    $scope.dateOptions = {format: 'yyyy/mm/dd'};
+
     $scope.submitFrom = function() {
 	$http.post('tasks', $scope.newtask).
         success(function() {
@@ -37,6 +39,7 @@ function tasksCtrl($scope, $http, $location) {
     $scope.show_subtask = true;
     $scope.mytasks = true;
     $scope.todayDate = new Date();
+  
     
     $scope.fetchTasks = function() {
 	$http.get('tasks').
