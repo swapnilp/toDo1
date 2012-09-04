@@ -39,8 +39,7 @@ function tasksCtrl($scope, $http, $location) {
     $scope.edit_tasks = false;
     $scope.show_subtask = true;
     $scope.mytasks = true;
-    //$scope.todayDate = new Date();
-  
+
     
     $scope.fetchTasks = function() {
 	$http.get('tasks').
