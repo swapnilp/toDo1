@@ -46,7 +46,6 @@ function tasksCtrl($scope, $http, $location) {
 	$http.get('tasks').
         success(function( taskss ) {
                 $scope.tasks = taskss;
-		console.log( typeOf($scope.tasks.end_date));
             });
     };
 
