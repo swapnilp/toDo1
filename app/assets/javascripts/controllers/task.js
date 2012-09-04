@@ -16,6 +16,7 @@ function newTaskCtrl($scope, $http, $location) {
 newTaskCtrl.$inject = ["$scope", "$http", "$location"];
 
 function newsubTaskCtrl($scope, $http) {
+    $scope.dateOptions = {format: 'yyyy/mm/dd'};
 
     $scope.submitFrom = function() {
 	//alert("swapnil");
