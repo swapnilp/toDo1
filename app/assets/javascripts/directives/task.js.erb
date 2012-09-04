@@ -107,6 +107,7 @@ module.directive('blink', function($timeout) {
      };
 });
 
+
 module.directive('bDatepicker', function(){
     return {
       require: '?ngModel',
@@ -122,7 +123,7 @@ module.directive('bDatepicker', function(){
         };
         if (controller != null) {
           controller.$render = function() {
-            element.datepicker().data().datepicker.date = controller.$viewValue;
+            //element.datepicker().data().datepicker.date = controller.$viewValue;
             element.datepicker('setValue');
             element.datepicker('update');
             return controller.$viewValue;
