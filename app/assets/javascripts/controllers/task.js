@@ -15,22 +15,6 @@ function newTaskCtrl($scope, $http, $location) {
 }
 newTaskCtrl.$inject = ["$scope", "$http", "$location"];
 
-function newsubTaskCtrl($scope, $http) {
-    $scope.dateOptions = {format: 'yyyy/mm/dd'};
-
-    $scope.submitFrom = function() {
-	//alert("swapnil");
-	$scope.newtask.master_task_id = $scope.task.id;
-       	$http.post('tasks', $scope.newtask).
-        success(function( ) {
-		$scope.fetchsubTasks();
-		$scope.show_subtask = true;
-	    });
-	
-    };
-}
-newTaskCtrl.$inject = ["$scope", "$http"];
-
 
 function tasksCtrl($scope, $http, $location) {
     $scope.tasks = [];
@@ -45,6 +29,18 @@ function tasksCtrl($scope, $http, $location) {
 	$http.get('tasks').
         success(function( taskss ) {
                 $scope.tasks = taskss;
+            });
+    };
+
+    $scope.savesubtask = function(subtask) {
+	subtask.master_task_id = $scope.task.id;
+	$http.post('tasks', subtask).
+        success(function() {
+		$scope.fetchsubTasks();
+		$scope.show_subtask = true;
+            }).
+	error( function( data ){
+		alert("Error");
             });
     };
 

@@ -54,10 +54,16 @@ module.directive("newSubtask", function() {
   return {
     restrict: "E",
     templateUrl: "<%=asset_path 'tasks/task_form.html' %>",
-    controller: newsubTaskCtrl,
+    //controller: newsubTaskCtrl,
     replace: false,
-    link: function(scope, elt, attrs, controller) {
+    link: function(scope, elt, attrs, controller, http) {
          //scope.newtask = {};
+
+        scope.dateOptions = {format: 'yyyy/mm/dd'};
+
+        scope.submitFrom = function() {
+	  scope.savesubtask(scope.newtask);                                                                                                                             
+    };
     }
   }
 });
