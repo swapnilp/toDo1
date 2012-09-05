@@ -45,6 +45,10 @@ module.directive("newtaskForm", function() {
     controller: newTaskCtrl,
     replace: false,
     link: function(scope, elt, attrs, controller) {
+    scope.$watch('newtask.start_date', function() {
+        //alert(scope.newtask.start_date.value);
+        //datepicker('setStartDate', scope.newtask.start_date);
+    });
     }
 
   }
@@ -115,37 +119,40 @@ module.directive('blink', function($timeout) {
 
 
 module.directive('bDatepicker', function(){
-    return {
-      require: '?ngModel',
-      restrict: 'A',
-      link: function($scope, element, attrs, controller) {
-        var updateModel;
-        updateModel = function(ev) {
-          element.datepicker('hide');
-          element.blur();
-          return $scope.$apply(function() {
-            return controller.$setViewValue(ev.date);
-          });
-        };
-        if (controller != null) {
-          controller.$render = function() {
-            //element.datepicker().data().datepicker.date = controller.$viewValue;
-            element.datepicker('setValue');
-            element.datepicker('update');
-            return controller.$viewValue;
-          };
-        }
-        return attrs.$observe('bDatepicker', function(value) {
-          var options;
-          options = {};
-          if (angular.isObject(value)) {
-            options = value;
-          }
-          if (typeof(value) === "string" && value.length > 0) {
-            options = angular.fromJson(value);
-          }
-          return element.datepicker(options).on('changeDate', updateModel);
+  return {
+    require: '?ngModel',
+    restrict: 'A',
+    link: function($scope, element, attrs, controller) {
+      var updateModel;
+      updateModel = function(ev) {
+        element.datepicker('hide');
+        element.blur();
+        return $scope.$apply(function() {
+          return controller.$setViewValue(ev.date);
         });
+      };
+      if (controller != null) {
+        controller.$render = function() {
+          //element.datepicker().data().datepicker.date = controller.$viewValue;
+          //element.datepicker('setValue');
+	  element.datepicker('setStartDate', new Date());
+          element.datepicker('update');
+          return controller.$viewValue;
+        };
       }
-    };
-  });
+      return attrs.$observe('bDatepicker', function(value) {
+        var options;
+
+        options = {};
+        if (angular.isObject(value)) {
+          options = value;
+        }
+        if (typeof(value) === "string" && value.length > 0) {
+          options = angular.fromJson(value);
+        }
+
+        return element.datepicker(options).on('changeDate', updateModel);
+      });
+    }
+  };
+});
